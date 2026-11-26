@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#1b1b1f">
+<title>Spirit Bingo</title>
+<style>
+/* VOICE: játékos, minimál, mint egy Minecraft menü
+   IDEA: a játék inventory panelje, a mezők a slotok
+   PICTURE: maga a 4x4-es kártya, koppintásra piros pixel X
+   COLOUR and TYPE: #c6c6c6 panel, #8b8b8b slot, piros X; Minecraft font + Monocraft
+   LAYOUT: panel középen, alatta egy gomb */
+@font-face{font-family:MC;src:url(data:font/woff2;base64,d09GMgABAAAAAASYAAwAAAAAErAAAARHAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYGYACBDBEICptUkjQBNgIkA4FgC3YABCAFghAHIBvHDCiuC+ixqV2E6abFZxDLHFwmH++VOW2JS+Kh/6Pfnbe07RR98Nq9QDoedQLJ32gkAUcaJpA25rt8m5El/43HWqfzBAXQ9ngA6f1ahQfgWd7u96KgdJv9C4Lys882SQuClMXg8NoHyYE/SETo9hFJ639A4L96spLb/2eGjSADBmzzn0TAf36tfZ2HiZXkLRDqnb3vjCLuzWcXG0jiIREKoUDGMy1RiiUo9adQv62hdo5sqsQQyuHH8//JAhwAaIh2EWsv/pu8wUA9Bhpc+TAAIACA55c4pHjg9H8VIyUCaNkTGwQa6OACI7gQ/EW5lLBmS2ecweaLpVaPvwobmRk0Flckldl9VfXrnTVaScGEQvNbo2iAR8AHyjf9i3ELYAdQCb4/BKoWCheKhWAqUwTnmmRR0OTBLv1Ai3NBPebMGBPX8eHdm1qnyXt1OpjTm6/Md8TJhfQ6Fl1M1sRzt1lm60nCbMmHNHGzdtQ9GGb/wUkvnnwiheMpz9KZRZboDaPcwgHGkypfchWJ8zffTpnQZG8U5e8SjAyqqeZhEMP9VZCOKXdd1psQGZBORu5FCJy+6nORwpGsSSu+NzATIlshc5B1O9Tq03KZjtaH6fd7KIJgocEQnsnmOxha/VncOGcTIjblMBrCbSXvqC26L5h4SFpF+Lk90C1BYTPmKX8hqJIvw0NdwSGXYFkGSQVjCdoQhixbMF6Zg+jjA6GwuQ5QIY/buhLo1aOiA5XTinK4PphyDYz2M3EvYyC3Owf6lt/BLlOPpchUCEBwAmg9SJABYQ6vGV32wNUSkziFweGBzx1cl81gWKoVBR6MlxHHpVjWOXyEMhR1knPXhKNC8l61zz2LcIQ3NQUGt1VPEsRR0xx4CZ85KGugQVVIl9ZXuGQvpN0YKGDz1xlobhee7VEVQOkxwr6oMGS4CbQpLSqCnodDuIXc8K+i76OgoPfrow0yc1VmQnaaJa2+QR6VI5Voq4nIBqF8ErnQoCxHDEPW0o0hyBonreLJtSjA4m1pPiJYsF4Uj/kmrzIa+nEIpZwUmHxmK2CYftyUgOHdgdwjg1uyl7UWsXXMUYwTLLhvps+EI7mNE5ZRNENFcGLZPLecKgW7+NeDMUEtk7C/SmaTh26a1yjrtJb7TvLBM/a5k4i3YiNfEbhtIyJQcSwiVfut5QQBH3VPh/3gLEMo4qyNSgDpO9spJD6xiXqIgEM9npS2AOBlY3lD2XGSkTjhH725PMJW4IDmMwIExPufr8cHf5McwM/TGP0N1eSJHQYIGFkxk38BYd9/G61xkn6oUd9pUlDbzf0JLVVusSWRik58H/JIREDTPLTtHItjCXALRCGtaoVmdlhY7NiFbtstDJueWQX+Jdxi9dl1Gq0TWB6zTKOCiEaLwgBUQqmpM6sUdpnaKVRpXEaZnWoxO0VOu0vhBKm+6INATk+pH7Y7dBYzoArBAN5wGgAA) format("woff2")}
+@font-face{font-family:MCM;src:url(data:font/woff2;base64,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) format("woff2")}
+:root{color-scheme:dark}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#1b1b1f;color:#fff}
+body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:max(12px,env(safe-area-inset-top)) 10px max(16px,env(safe-area-inset-bottom));font-family:MCM,monospace;-webkit-user-select:none;user-select:none}
+.panel{width:min(100%,640px);background:#c6c6c6;padding:clamp(8px,2.4vw,16px);box-shadow:inset 4px 4px 0 #fff,inset -4px -4px 0 #555}
+h1{font:400 clamp(30px,9vw,56px)/1 MC,monospace;color:#3f3f3f;text-align:center;margin:4px 0 clamp(8px,2.5vw,14px)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(3px,1vw,6px)}
+.slot{appearance:none;border:0;margin:0;font:inherit;aspect-ratio:1;background:#8b8b8b;box-shadow:inset 4px 4px 0 #373737,inset -4px -4px 0 #fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:5px;color:#fff;line-height:1.05;letter-spacing:-0.03em;word-spacing:-0.3em;text-shadow:.11em .11em 0 #262626;text-wrap:balance;word-break:keep-all;overflow-wrap:normal;position:relative;cursor:pointer;overflow:hidden}
+.slot span{display:inline-block;max-width:100%}
+.slot:active{background:#9d9d9d}
+.slot:focus-visible{outline:3px solid #fff;outline-offset:-3px}
+.slot svg{position:absolute;inset:8%;width:84%;height:84%;opacity:0;transform:scale(1.4);transition:transform .15s steps(3),opacity .1s;pointer-events:none;filter:drop-shadow(3px 3px 0 #3a0000)}
+.slot.on span{opacity:.45}
+.slot.on svg{opacity:1;transform:none}
+.slot.win{background:#6d9b3a;box-shadow:inset 4px 4px 0 #3d5a1f,inset -4px -4px 0 #a6d86b}
+.bar{width:min(100%,640px);display:flex;gap:10px;margin-top:14px}
+.btn{flex:1;appearance:none;border:2px solid #000;min-height:50px;background:#7a7a7a;color:#fff;font:400 20px/1 MCM,monospace;text-shadow:2px 2px 0 #3f3f3f;box-shadow:inset 3px 3px 0 #aaa,inset -3px -3px 0 #555;cursor:pointer}
+.btn:active{background:#8c8ca8;box-shadow:inset 3px 3px 0 #bcbcdc,inset -3px -3px 0 #5c5c78}
+.count{flex:none;display:flex;align-items:center;padding:0 6px;font-size:20px;color:#a8a8a8}
+.toast{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.6);font:400 clamp(56px,18vw,110px)/1 MC,monospace;color:#ffd83d;text-shadow:.07em .07em 0 #3e3500;opacity:0;pointer-events:none;transition:transform .25s steps(4),opacity .2s}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media(prefers-reduced-motion:reduce){.slot svg,.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="panel">
+  <h1>Spirit Bingo</h1>
+  <div class="grid" id="grid"></div>
+</div>
+<div class="bar">
+  <button class="btn" id="reset" type="button">Törlés</button>
+  <div class="count" id="count">0/16</div>
+</div>
+<div class="toast" id="toast" aria-live="polite">BINGO!</div>
+<script>
+{
+  const CELLS = ["TikTok trend egy randommal", "Kérd el egy csaj számát", "Vegyél egy hotdogot", "Némán alkudozz az eladóval", "Tippeld meg jól valaki lábméretét", "Lowballolj egy árusnál", "Adj el valakinek valamit", "Tradelj el valamit", "Kérj outfit checket egy randomtól", "Csinálj képet valaki híressel", "Szerezz +1 subot", "Szerezz valamit ingyen", "Próbáld megvenni valaki cipőjét", "Csinálj képet egy veled egyidőssel", "Hívj meg valakit egy hotdogra", "Nyerj meg egy challenget"];
+  const KEY = "spirit-bingo-v1";
+  const grid = document.getElementById("grid"), toast = document.getElementById("toast");
+  const X = '<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><g fill="#e0262b">' +
+    [0,1,2,3,4,5,6,7,8,9].map(i => `<rect x="${i}" y="${i}" width="1.2" height="1.2"/><rect x="${9-i}" y="${i}" width="1.2" height="1.2"/>`).join("") + '</g></svg>';
+  const LINES = [];
+  for (let i = 0; i < 4; i++) { LINES.push([0,1,2,3].map(j => i*4+j)); LINES.push([0,1,2,3].map(j => j*4+i)); }
+  LINES.push([0,5,10,15],[3,6,9,12]);
+  let on = [];
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(s)) on = s; } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(on)); } catch (e) {} };
+
+  grid.innerHTML = CELLS.map((t, i) => `<button class="slot" type="button" data-i="${i}" aria-pressed="false"><span>${t}</span>${X}</button>`).join("");
+  const slots = [...grid.children], spans = slots.map(s => s.firstChild);
+
+  function fit() {
+    let lo = 8, hi = 60;
+    const ok = f => { slots.forEach(s => s.style.fontSize = f + "px");
+      return slots.every((s, i) => spans[i].scrollWidth <= spans[i].clientWidth + 1 && spans[i].offsetHeight <= s.clientHeight - 10); };
+    while (lo < hi) { const m = Math.ceil((lo + hi) / 2); if (ok(m)) lo = m; else hi = m - 1; }
+    ok(lo);
+  }
+
+  let lastWins = 0, tt;
+  function update(announce) {
+    const set = new Set(on);
+    const wins = LINES.filter(l => l.every(i => set.has(i)));
+    const wc = new Set(wins.flat());
+    slots.forEach((s, i) => { s.classList.toggle("on", set.has(i)); s.classList.toggle("win", wc.has(i)); s.setAttribute("aria-pressed", set.has(i)); });
+    document.getElementById("count").textContent = set.size + "/16";
+    if (announce && wins.length > lastWins) {
+      toast.classList.add("show"); clearTimeout(tt);
+      tt = setTimeout(() => toast.classList.remove("show"), 1600);
+      try { navigator.vibrate && navigator.vibrate([60, 40, 120]); } catch (e) {}
+    }
+    lastWins = wins.length;
+  }
+
+  grid.addEventListener("click", e => {
+    const s = e.target.closest(".slot"); if (!s) return;
+    const i = +s.dataset.i;
+    on = on.includes(i) ? on.filter(x => x !== i) : on.concat(i);
+    save(); update(true);
+  });
+  const rb = document.getElementById("reset");
+  rb.addEventListener("click", () => {
+    if (!on.length) return;
+    if (!rb.dataset.sure) { rb.dataset.sure = "1"; rb.textContent = "Biztos?"; setTimeout(() => { delete rb.dataset.sure; rb.textContent = "Törlés"; }, 2500); return; }
+    delete rb.dataset.sure; rb.textContent = "Törlés"; on = []; save(); update(false);
+  });
+
+  const ro = new ResizeObserver(fit); ro.observe(grid);
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit);
+  lastWins = 99; update(false); lastWins = LINES.filter(l => l.every(i => on.includes(i))).length;
+}
+</script>
+</body>
+</html>
